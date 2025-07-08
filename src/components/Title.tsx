@@ -6,12 +6,11 @@ interface TitleProps {
 
 interface TitleProps {
     title: string;
-    className?: string;
 }
 
-const Title: React.FC<TitleProps> = ({ title, className }) => {
+const Title: React.FC<TitleProps> = ({ title }) => {
     return (
-        <h1 className={`text-4xl uppercase ${className ?? ''}`.trim()}>{title}</h1>
+        <h1 className={`text-4xl uppercase mt-12`}>{title}</h1>
     )
 }
 

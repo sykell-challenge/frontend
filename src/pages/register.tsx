@@ -5,7 +5,7 @@ import Welcome from "../templates/Welcome";
 const Register = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <Title title="Welcome" />
+      <Title title="Welcome!" />
       <div className="flex gap-32 mt-24">
         <Welcome />
         <RegisterTemplate />

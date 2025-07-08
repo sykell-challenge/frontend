@@ -1,7 +1,9 @@
+import Title from "../components/Title";
+
 const Results = () => {
   return (
-    <div className="w-full flex items-center justify-center">
-      <h1 className="text-4xl uppercase text-text">Results</h1>
+    <div className="w-full flex items-center justify-center">    
+      <Title title="Results" />
     </div>
   );
 };

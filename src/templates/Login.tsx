@@ -8,7 +8,11 @@ const Login = () => {
 
             <InputText className='bg-border text-text p-2' placeholder='Username' />
             <InputText className='bg-border text-text p-2' placeholder='Password' type='password' />
-            <Button label="Login" className='bg-border text-text w-48 py-2 mt-4 hover:text-text-dark' />
+            <Button
+                label="Login"
+                className='bg-border text-text w-48 py-2 mt-4 hover:text-text-dark'
+                onClick={() => window.location.href = '/urlinput'}
+            />
             <a href="/register" className='p-button p-button-link w-full py-2 mt-2 hover:text-text-dark' >Create an account instead</a>
         </div>
     )
