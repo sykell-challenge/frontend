@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './router';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primeicons/primeicons.css';
@@ -11,8 +12,8 @@ if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <PrimeReactProvider >
-        <App />
+      <PrimeReactProvider>
+        <RouterProvider router={router} />
       </PrimeReactProvider>
     </React.StrictMode>,
   );
