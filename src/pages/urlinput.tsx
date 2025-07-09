@@ -9,7 +9,7 @@ const UrlInput = () => {
         <InputArea />
       </div>
       <div className="flex flex-col items-center justify-center mt-8">
-        <a href="/results" className='p-button p-button-link w-full py-2 mt-2 hover:text-text-dark' >Previous crawls</a>
+        <a href="/results" className='p-button p-button-link w-full py-2 mt-2 !text-text hover:!text-text-dark' >Previous crawls</a>
       </div>
     </div>
   );

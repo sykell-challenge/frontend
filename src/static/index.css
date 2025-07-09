@@ -1,5 +1,4 @@
 
-@layer tailwind-base, primereact, tailwind-utilities;
 
 @theme {
   --color-background: #020D0C;
@@ -9,17 +8,18 @@
   --color-border-light: #307B8C;
 }
 
-/* IMPORTANT: In "styled" mode you must add the PrimeReact Theme here. Do NOT include in "unstyled" mode */
-@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
+
+
 
 @layer tailwind-base {
   @import 'tailwindcss';
   @tailwind base;
 }
 
-@layer tailwind-utilities {
-  @tailwind components;
-  @tailwind utilities;
+@layer primereact {
+  @import 'primereact/resources/primereact.css';
+  @import 'primereact/resources/themes/lara-dark-blue/theme.css';
+  @import 'primeicons/primeicons.css';
 }
 
 #root {
@@ -38,5 +38,4 @@ body {
   background-color: #020D0C;
   width: 100vw;
   height: 100vh;
-  border: 24px solid #205B73;
 }
