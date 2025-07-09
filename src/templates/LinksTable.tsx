@@ -9,11 +9,17 @@ type LinksTableProps = {
 
 const LinksTable = ({ links }: LinksTableProps) => {
     return (
-        <div className="border-border border-[16px] p-4 flex flex-col gap-4">
+        <div className="p-4 flex flex-col gap-4">
             <h2 className="text-2xl">Links</h2>
 
             <DataTable value={links} stripedRows tableStyle={{ minWidth: '20rem' }} >
-                <Column field="link" header="Link" headerClassName="bg-border text-text" bodyClassName="text-text bg-border-light" />
+                <Column field="link" header="Link" headerClassName="bg-border text-text" bodyClassName="text-text bg-border-light" 
+                body={({link}) => (
+                    <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                        {link}
+                    </a>
+                )}
+                />
                 <Column field="type" header="Type" headerClassName="bg-border text-text" bodyClassName="text-text bg-border-light" />
                 <Column field="status" header="Status" headerClassName="bg-border text-text" bodyClassName="text-text bg-border-light" />
             </DataTable>

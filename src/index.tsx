@@ -5,6 +5,7 @@ import { router } from './router';
 import { PrimeReactProvider } from 'primereact/api';
 import './static/index.css';
 
+
 const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);

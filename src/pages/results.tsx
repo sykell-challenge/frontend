@@ -1,10 +1,10 @@
 import Title from "../components/Title";
 import URLTable from "../templates/URLTable";
 import WebsitesTable from "../templates/WebsitesTable";
-
 import { ScrollPanel } from 'primereact/scrollpanel';
 
 const Results = () => {
+
   return (
     <div className="w-full flex flex-col items-start justify-center px-[15vw] gap-8">
       <Title title="Results Dashboard" />

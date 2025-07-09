@@ -1,6 +1,6 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
-import useRegister from '../hooks/useRegister';
+import useRegister from '../hooks/apis/useRegister';
 import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Message } from 'primereact/message';

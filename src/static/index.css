@@ -20,6 +20,7 @@
   @import 'primereact/resources/primereact.css';
   @import 'primereact/resources/themes/lara-dark-blue/theme.css';
   @import 'primeicons/primeicons.css';
+  @import 'primeflex/primeflex.css';
 }
 
 #root {
