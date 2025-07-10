@@ -4,11 +4,12 @@ import Topbar from '../components/Topbar'
 
 export const Route = createRootRoute({
   component: () => {
-
-    return <>
-      <Topbar />
-      <Outlet />
-      {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />}
-    </>
+    return (
+      <>
+        <Topbar />
+        <Outlet />
+        {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />}
+      </>
+    )
   },
 })
