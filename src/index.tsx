@@ -5,7 +5,7 @@ import { router } from './router';
 import { PrimeReactProvider } from 'primereact/api';
 import { SocketProvider } from './contexts/SocketContext';
 
-import './static/index.css';
+import './index.css';
 
 
 const rootEl = document.getElementById('root');
@@ -13,7 +13,7 @@ if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <SocketProvider url="localhost:8080">
+      <SocketProvider url="http://localhost:8080">
         <PrimeReactProvider>
           <RouterProvider router={router} />
         </PrimeReactProvider>

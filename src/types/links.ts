@@ -1,5 +1,5 @@
 export type Link = {
     link: string;
-    type: "internal" | "external" | "broken";
+    type: string;//"internal" | "external" | "broken";
     status: string;
 };

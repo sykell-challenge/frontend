@@ -6,19 +6,14 @@ const useCheckLogin = () => {
 
     const token = localStorage.getItem('token')
 
-    if (location.pathname === '/register') {
+    if (!token && location.pathname === '/register') {
         return false
     }
 
     if (!token) {
         navigate({ to: '/login' })
         return false
-    }
-
-    if (location.pathname === '/login' || location.pathname === '/') {
-        navigate({ to: '/urlinput' })
-        return true
-    }
+    }    
 
     return true
 }

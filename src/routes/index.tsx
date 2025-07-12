@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import Login from '../pages/login'
+import Crawler from '../parts/pages/crawler'
 
 export const Route = createFileRoute('/')({
-    component: Login
+    component: Crawler
 })

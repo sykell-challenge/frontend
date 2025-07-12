@@ -16,5 +16,12 @@ COPY . .
 # Expose port 3000 (rsbuild dev server default)
 EXPOSE 3000
 
+ARG BACKEND_URL
+
+ENV BACKEND_URL=${BACKEND_URL}
+
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
 # Start the development server with hot reload
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]

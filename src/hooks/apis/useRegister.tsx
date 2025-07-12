@@ -1,22 +1,13 @@
-import useAxios from 'axios-hooks'
+import useApiRequest from './useAuthRequest'
 
 const useRegister = () => {
-    const [{ }, execute] = useAxios(
-        {
-            url: "http://localhost:8080/users",
-            method: "POST",
-        },
-        { manual: true }
-    );
+    const { makeRequest } = useApiRequest({
+        endpoint: "/users",
+        method: "POST",
+    });
 
     async function register(username: string, password: string, email?: string) {
-        try {
-            const response = await execute({ data: { username, password, email } });            
-
-            return [true, response.data];
-        } catch (error) {
-            return [false, error];
-        }
+        return makeRequest({ username, password, email });
     }
 
     return { register };

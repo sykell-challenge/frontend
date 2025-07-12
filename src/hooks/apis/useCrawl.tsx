@@ -1,32 +1,30 @@
 
-import useAxios from 'axios-hooks'
-import type { CrawlResponse } from '../../types/apis/crawl';
-
+import useApiRequest from './useAuthRequest'
+import type { CrawlJobResponse } from '../../types/apis/crawl';
 
 const useCrawl = () => {
-    const [{ }, execute] = useAxios(
-        {
-            url: "http://localhost:8080/crawl",
-            method: "post",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            },
-        },
-        { manual: true }
-    );
+    const { makeRequest: startCrawlRequest } = useApiRequest({
+        endpoint: "/crawl",
+        method: "POST",
+        requiresAuth: true,
+    });
 
-    async function crawl(url: string) {
-        try {
-            const response = await execute({ data: { url } });
+    const { makeRequest: cancelCrawlRequest } = useApiRequest({
+        endpoint: "/crawl",
+        method: "DELETE",
+        requiresAuth: true,
+    });
 
-            return [true, response.data as CrawlResponse];
-        } catch (error) {
-            return [false, error];
-        }
+    async function startCrawl(url: string) {
+        const [success, data] = await startCrawlRequest({ url });
+        return [success, data as CrawlJobResponse];
     }
 
-    return { crawl };
+    async function cancelCrawl(jobId: string) {
+        return await cancelCrawlRequest(undefined, `/crawl/${jobId}`);
+    }
+
+    return { startCrawl, cancelCrawl };
 }
 
 export default useCrawl

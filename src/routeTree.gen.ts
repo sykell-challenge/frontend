@@ -9,23 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UrlinputRouteImport } from './routes/urlinput'
-import { Route as ResultsRouteImport } from './routes/results'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DetailsRouteImport } from './routes/details'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResultsIndexRouteImport } from './routes/results/index'
+import { Route as ResultsUrlRouteImport } from './routes/results/$url'
 
-const UrlinputRoute = UrlinputRouteImport.update({
-  id: '/urlinput',
-  path: '/urlinput',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResultsRoute = ResultsRouteImport.update({
-  id: '/results',
-  path: '/results',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -36,88 +25,62 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DetailsRoute = DetailsRouteImport.update({
-  id: '/details',
-  path: '/details',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResultsIndexRoute = ResultsIndexRouteImport.update({
+  id: '/results/',
+  path: '/results/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsUrlRoute = ResultsUrlRouteImport.update({
+  id: '/results/$url',
+  path: '/results/$url',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/details': typeof DetailsRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/results': typeof ResultsRoute
-  '/urlinput': typeof UrlinputRoute
+  '/results/$url': typeof ResultsUrlRoute
+  '/results': typeof ResultsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/details': typeof DetailsRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/results': typeof ResultsRoute
-  '/urlinput': typeof UrlinputRoute
+  '/results/$url': typeof ResultsUrlRoute
+  '/results': typeof ResultsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/details': typeof DetailsRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/results': typeof ResultsRoute
-  '/urlinput': typeof UrlinputRoute
+  '/results/$url': typeof ResultsUrlRoute
+  '/results/': typeof ResultsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/details'
-    | '/login'
-    | '/register'
-    | '/results'
-    | '/urlinput'
+  fullPaths: '/' | '/login' | '/register' | '/results/$url' | '/results'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/details' | '/login' | '/register' | '/results' | '/urlinput'
-  id:
-    | '__root__'
-    | '/'
-    | '/details'
-    | '/login'
-    | '/register'
-    | '/results'
-    | '/urlinput'
+  to: '/' | '/login' | '/register' | '/results/$url' | '/results'
+  id: '__root__' | '/' | '/login' | '/register' | '/results/$url' | '/results/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DetailsRoute: typeof DetailsRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
-  ResultsRoute: typeof ResultsRoute
-  UrlinputRoute: typeof UrlinputRoute
+  ResultsUrlRoute: typeof ResultsUrlRoute
+  ResultsIndexRoute: typeof ResultsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/urlinput': {
-      id: '/urlinput'
-      path: '/urlinput'
-      fullPath: '/urlinput'
-      preLoaderRoute: typeof UrlinputRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/results': {
-      id: '/results'
-      path: '/results'
-      fullPath: '/results'
-      preLoaderRoute: typeof ResultsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -132,13 +95,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/details': {
-      id: '/details'
-      path: '/details'
-      fullPath: '/details'
-      preLoaderRoute: typeof DetailsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -146,16 +102,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/results/': {
+      id: '/results/'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof ResultsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results/$url': {
+      id: '/results/$url'
+      path: '/results/$url'
+      fullPath: '/results/$url'
+      preLoaderRoute: typeof ResultsUrlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DetailsRoute: DetailsRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
-  ResultsRoute: ResultsRoute,
-  UrlinputRoute: UrlinputRoute,
+  ResultsUrlRoute: ResultsUrlRoute,
+  ResultsIndexRoute: ResultsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
