@@ -1,8 +1,8 @@
 
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import { DataTable } from '@mui/material/datatable';
+import { Column } from '@mui/material/column';
 import type { Tag } from '../../types';
-import { Chart } from 'primereact/chart';
+import { Chart } from '@mui/material/chart';
 
 type WebsitesTableProps = {
     websites: {

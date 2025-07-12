@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { Card } from 'primereact/card';
-import { Message } from 'primereact/message';
+import Button from '@mui/material/Button';
 import { useUrlInputHandlers } from '../../hooks/useUrlInputHandlers';
+import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
+import Card from '@mui/material/Card';
 
 const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const { url, setUrl, handleAddUrl, error, isLoading } = useUrlInputHandlers();
@@ -21,7 +21,7 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
           e.preventDefault()
           handleAddUrl()
         }}>
-          <InputText
+          <TextField
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             // onKeyPress={handleKeyPress}
@@ -29,16 +29,17 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
             placeholder='http://example.com/foo/bar/index.html'
           />
           <Button
-            label={isLoading ? "Adding..." : "Add URL"}
             type='submit'
             className='px-6 py-2'
             onClick={handleAddUrl}
             disabled={!url.trim() || isLoading}
             loading={isLoading}
-          />
+          >
+            {isLoading ? "Adding..." : "Add URL"}
+          </Button>
         </form>
 
-        {error && <Message severity="error" text="Please enter a valid url!" />}
+        {error && <Alert severity="error">Please enter a valid url!</Alert>}
       </div>
     </Card>
   );

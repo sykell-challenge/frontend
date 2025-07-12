@@ -1,27 +1,19 @@
-import { Chart } from 'primereact/chart';
+import { BarChart } from '@mui/x-charts/BarChart';
 import React from 'react'
 import type { TagsBarChartProps } from '../../types';
 
 const TagsBarChart = ({ tags }: TagsBarChartProps) => {
     return (
-        <Chart
-            type="bar"
-            data={{
-                labels: tags.map(tag => tag.name),
-                datasets: [
-                    {
-                        label: '', 
-                        data: tags.map(tag => tag.count),
-                    },
-                ],
-            }}
-            options={{
-                plugins: {
-                    legend: {
-                        display: false, 
-                    },
-                },
-            }}
+        <BarChart
+            height={300}
+            xAxis={tags.map((tag) => {
+                return { data: [tag.name] }
+            })}
+            series={tags.map((tag) => {
+                return { data: [tag.count] }
+            })}
+
+
         />
     )
 }

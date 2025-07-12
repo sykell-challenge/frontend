@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'primereact/card';
+import Card  from '@mui/material/Card';
 import CrawlJobsTable from '../components/CrawlJobsTable';
 import CrawlJobsTableSkeleton from '../components/CrawlJobsTableSkeleton';
 import { useUrlInputHandlers } from '../../hooks/useUrlInputHandlers';

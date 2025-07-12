@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button } from 'primereact/button';
+
 import CrawlResultsLayout from './CrawlResultsLayout';
 import { useSelectedJob } from '../../hooks/useSelectedJob';
-
+import Button from '@mui/material/Button';
+import { Icon } from '@mui/material';
 const CrawlResultsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const { selectedJob, hasValidJobData, clearSelection } = useSelectedJob();
 
@@ -19,10 +20,9 @@ const CrawlResultsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ c
       {/* Close button positioned absolutely in the top right */}
       <div className="absolute top-4 right-4 z-10">
         <Button
-          icon="pi pi-times"
+          startIcon={<Icon>close</Icon>}
           className="p-button-text"
           onClick={clearSelection}
-          tooltip="Close Details"
         />
       </div>
       

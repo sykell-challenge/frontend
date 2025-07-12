@@ -1,5 +1,6 @@
 import React from 'react'
-import { Chart } from 'primereact/chart';
+import { PieChart } from '@mui/x-charts/PieChart';
+
 
 type URLPieChartProps = {
   internalUrlCount: number;
@@ -13,12 +14,13 @@ const URLPieChart: React.FC<URLPieChartProps> = ({
   brokenUrlCount,
 }) => {
   return (
-    <Chart type="pie" data={{
-      labels: ['Internal', 'External', 'Broken'],
-      datasets: [{
-        data: [internalUrlCount, externalUrlCount, brokenUrlCount],
-      }]
-    }} />
+    <PieChart series={[{
+      data: [
+        { id: 0, value: internalUrlCount, label: "Internal" },
+        { id: 1, value: externalUrlCount, label: "External" },
+        { id: 2, value: externalUrlCount, label: "Inaccessible" },
+      ]
+    }]} />
   );
 }
 

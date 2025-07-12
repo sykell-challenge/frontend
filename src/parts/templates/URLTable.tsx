@@ -1,7 +1,7 @@
 
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
+import { DataTable } from '@mui/material/datatable';
+import { Column } from '@mui/material/column';
+import { Button } from '@mui/material/Button';
 
 
 type URLTableProps = {

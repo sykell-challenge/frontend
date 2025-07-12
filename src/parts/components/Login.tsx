@@ -1,9 +1,10 @@
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
+import Button from '@mui/material/Button'
+
 import useLogin from '../../hooks/apis/useLogin';
 import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Message } from 'primereact/message';
+import Alert from '@mui/material/Alert';
+import TextField from '@mui/material/TextField';
 
 const Login = () => {
     const { login } = useLogin();
@@ -16,7 +17,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     return (<>
-        {error && <Message severity="error" text={error} />}
+        {error && <Alert severity="error">{error}</Alert>}
         <form className="p-4 flex flex-col gap-4" onSubmit={async (e) => {
             e.preventDefault();
 
@@ -29,13 +30,12 @@ const Login = () => {
                 setError(data?.response?.data?.error || 'Login failed');
             }
         }}>
-            <InputText
-
+            <TextField
                 placeholder='Username'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <InputText
+            <TextField
 
                 placeholder='Password'
                 type='password'
@@ -43,10 +43,9 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <Button
-                label="Login"
                 className=' w-full py-2 mt-4 '
                 type="submit"
-            />
+            >Login</Button>
         </form>
     </>
     )

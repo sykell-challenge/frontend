@@ -3,9 +3,11 @@ import type { CrawlStatus } from "../types/apis/crawl";
 
 export type StatusSeverity = 
   | 'success'
-  | 'danger'
-  | 'warning'
-  | 'info';
+  | 'primary'
+  | 'default'
+  | 'secondary'
+  | 'info'
+
 
 /**
  * Maps crawl job status to PrimeReact severity
@@ -17,13 +19,13 @@ export const getStatusSeverity = (status: CrawlStatus): StatusSeverity => {
       return 'success';
     case 'error':
     case 'cancelled':
-      return 'danger';
+      return 'secondary';
     case 'running':
-      return 'warning';
+      return 'info';
     case 'queued':
-      return 'info';
+      return 'primary';
     default:
-      return 'info';
+      return 'default';
   }
 };
 

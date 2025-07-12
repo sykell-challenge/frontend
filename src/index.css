@@ -13,13 +13,6 @@
   @tailwind base;
 }
 
-@layer primereact {
-  @import 'primereact/resources/primereact.css';
-  @import 'primereact/resources/themes/lara-light-blue/theme.css';
-  @import 'primeicons/primeicons.css';
-  @import 'primeflex/primeflex.css';
-}
-
 #root {
   width: 100%;
   height: 100%;

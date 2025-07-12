@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ProgressSpinner } from 'primereact/progressspinner';
+import CircularProgress from '@mui/material/CircularProgress';
 import CrawlResultsLayout from '../../parts/templates/CrawlResultsLayout';
 import { useUrlData } from '../../hooks/apis/useUrlData';
 
@@ -14,7 +14,7 @@ function RouteComponent() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-96">
-        <ProgressSpinner />
+        <CircularProgress />
       </div>
     );
   }

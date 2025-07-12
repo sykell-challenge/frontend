@@ -1,5 +1,5 @@
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
+import { Button } from '@mui/material/Button'
+import { InputText } from '@mui/material/inputtext'
 
 import useCrawlStore from '../../stores/crawl'
 

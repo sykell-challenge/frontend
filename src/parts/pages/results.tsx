@@ -2,7 +2,7 @@ import Title from "../components/Title";
 import CrawlJobsSection from "../templates/CrawlJobsSection";
 import URLTable from "../templates/URLTable";
 import WebsitesTable from "../templates/WebsitesTable";
-import { ScrollPanel } from 'primereact/scrollpanel';
+import { ScrollPanel } from '@mui/material/scrollpanel';
 
 const Results = () => {
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Divider } from 'primereact/divider';
 import Title from '../components/Title';
 import LinksTable from './LinksTable';
 import TagsBarChart from './TagsBarChart';

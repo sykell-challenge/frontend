@@ -1,9 +1,9 @@
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
+import Button from '@mui/material/Button'
 import useRegister from '../../hooks/apis/useRegister';
 import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Message } from 'primereact/message';
+import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
 
 const Register = () => {
     const { register } = useRegister();
@@ -54,24 +54,24 @@ const Register = () => {
 
     return (
         <>
-            {error && <Message severity="error" text={error} />}
-            {success && <Message severity="success" text={success} />}
+            {error && <Alert severity="error">{error}</Alert>}
+            {success && <Alert severity="success">{success}</Alert>}
             <form className="p-4 flex flex-col gap-4" onSubmit={handleSubmit}>
-                <InputText
+                <TextField
                     className='p-2'
                     placeholder='Username'
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                 />
-                <InputText
+                <TextField
                     className='p-2'
                     placeholder='Email'
                     type='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <InputText
+                <TextField
                     className='p-2'
                     placeholder='Password'
                     type='password'
@@ -79,7 +79,7 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <InputText
+                <TextField
                     className='p-2'
                     placeholder='Confirm Password'
                     type='password'

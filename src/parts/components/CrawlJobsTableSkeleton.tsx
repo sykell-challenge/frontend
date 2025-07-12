@@ -1,58 +1,48 @@
 import React from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
-import { Tag } from 'primereact/tag';
-import { ProgressBar } from 'primereact/progressbar';
-import { getStatusSeverity, getStatusDisplayText } from '../../utils/getStatusSeverity';
 import type { CrawlJob } from '../../types';
-import type { CrawlStatus } from '../../types/apis/crawl';
-import { Skeleton } from 'primereact/skeleton';
+import Skeleton from '@mui/material/Skeleton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const CrawlJobsTable: React.FC = () => {
-  const skeletonTemplate = (rowData: CrawlJob) => {
+  const skeletonTemplate = () => {
     return <Skeleton />
   };
 
-  const jobs = [{},{},{},{}]
+  const jobs = Array.from({ length: 4 }, () => ({}));
 
   return (
     <div className="w-full">
-      <DataTable
-        value={jobs}
-        emptyMessage="No crawl jobs yet. Add a URL above to get started!"
-        className="p-datatable-sm"
-        stripedRows
-      >
-        <Column
-          field="url"
-          header="URL"
-          body={skeletonTemplate}
-          className="w-2/5"
-        />
-        <Column
-          field="status"
-          header="Status"
-          body={skeletonTemplate}
-          className="w-1/6"
-        />
-        <Column
-          header="Progress"
-          body={skeletonTemplate}
-          className="w-1/6"
-        />
-        <Column
-          field="createdAt"
-          header="Created"
-          body={skeletonTemplate}
-          className="w-1/6"
-        />
-        <Column
-          header="Actions"
-          body={skeletonTemplate}
-          className="w-1/12"
-        />
-      </DataTable>
+      <TableContainer component={Paper} sx={{ minWidth: 650 }} aria-label="crawl jobs table">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>URL</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Progress</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobs.map((job, jobIndex) => (
+              <TableRow key={jobIndex} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell>{skeletonTemplate()}</TableCell>
+                <TableCell>{skeletonTemplate()}</TableCell>
+                <TableCell>{skeletonTemplate()}</TableCell>
+                <TableCell>{skeletonTemplate()}</TableCell>
+                <TableCell>{skeletonTemplate()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
     </div>
   );
 };

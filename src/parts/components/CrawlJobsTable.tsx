@@ -1,12 +1,19 @@
 import React from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
-import { Tag } from 'primereact/tag';
-import { ProgressBar } from 'primereact/progressbar';
+import Button from '@mui/material/Button'
 import { getStatusSeverity, getStatusDisplayText } from '../../utils/getStatusSeverity';
 import type { CrawlJob } from '../../types';
 import type { CrawlStatus } from '../../types/apis/crawl';
+import LinearProgress from '@mui/material/LinearProgress';
+import Chip from '@mui/material/Chip';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 interface CrawlJobsTableProps {
   jobs: CrawlJob[];
@@ -22,9 +29,9 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
   const statusBodyTemplate = (rowData: CrawlJob) => {
     return (
       <div className="flex flex-col gap-1">
-        <Tag
-          value={getStatusDisplayText(rowData.status as CrawlStatus, !!rowData.data)}
-          severity={getStatusSeverity(rowData.status as CrawlStatus)}
+        <Chip
+          label={getStatusDisplayText(rowData.status as CrawlStatus, !!rowData.data)}
+          color={getStatusSeverity(rowData.status as CrawlStatus)}
         />
         {rowData.status === 'error' && rowData.error && (
           <span className="text-xs text-red-600">{rowData.error}</span>
@@ -39,7 +46,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
   const progressBodyTemplate = (rowData: CrawlJob) => {
     if (['queued', 'started', 'running'].includes(rowData.status)) {
       return (
-        <ProgressBar
+        <LinearProgress
           value={rowData.progress || 0}
           style={{ height: '8px', width: '100px' }}
         />
@@ -53,20 +60,18 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
       <div className="flex gap-2">
         {(rowData.status === 'completed' || (['started', 'running'].includes(rowData.status) && rowData.data)) && (
           <Button
-            icon="pi pi-eye"
+            startIcon={<VisibilityOutlinedIcon />}
             size="small"
             className="p-button-text"
             onClick={() => onViewDetails(rowData.jobId)}
-            tooltip={['started', 'running'].includes(rowData.status) ? 'View Partial Results' : 'View Details'}
           />
         )}
         {['queued', 'started', 'running'].includes(rowData.status) && (
           <Button
-            icon="pi pi-times"
+            startIcon={<ClearOutlinedIcon />}
             size="small"
             className="p-button-text p-button-danger"
             onClick={() => onCancel(rowData.jobId)}
-            tooltip="Cancel"
           />
         )}
       </div>
@@ -89,41 +94,30 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
 
   return (
     <div className="w-full">
-      <DataTable
-        value={jobs}
-        emptyMessage="No crawl jobs yet. Add a URL above to get started!"
-        className="p-datatable-sm"
-        stripedRows
-      >
-        <Column
-          field="url"
-          header="URL"
-          body={urlBodyTemplate}
-          className="w-2/5"
-        />
-        <Column
-          field="status"
-          header="Status"
-          body={statusBodyTemplate}
-          className="w-1/6"
-        />
-        <Column
-          header="Progress"
-          body={progressBodyTemplate}
-          className="w-1/6"
-        />
-        <Column
-          field="createdAt"
-          header="Created"
-          body={timeBodyTemplate}
-          className="w-1/6"
-        />
-        <Column
-          header="Actions"
-          body={actionsBodyTemplate}
-          className="w-1/12"
-        />
-      </DataTable>
+      <TableContainer component={Paper} sx={{ minWidth: 650 }} aria-label="crawl jobs table">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>URL</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Progress</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobs.map((job) => (
+              <TableRow key={job.jobId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell>{urlBodyTemplate(job)}</TableCell>
+                <TableCell>{statusBodyTemplate(job)}</TableCell>
+                <TableCell>{progressBodyTemplate(job)}</TableCell>
+                <TableCell>{timeBodyTemplate(job)}</TableCell>
+                <TableCell>{actionsBodyTemplate(job)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'primereact/button';
+import { Button } from '@mui/material/Button';
 import CrawlResultsLayout from './CrawlResultsLayout';
 import type { CrawlJob } from '../../types';
 
