@@ -42,7 +42,6 @@ export const useUrlData = (urlId: string) => {
   }, [urlId]);
 
   // Transform the API response to match CrawlResponse format
-  console.log("useUrlData response:", data);
   const transformedData: CrawlResponse | null = data?.data ? {
     title: data.data.title,
     status_code: data.data.status_code,
@@ -50,8 +49,8 @@ export const useUrlData = (urlId: string) => {
     login_form: data.data.login_form,
     tags: data.data.tags,
     links: data.data.links,
-    links_count: data.data.links.length,
-    tags_count: data.data.tags.length,
+    links_count: data.data.links?.length,
+    tags_count: data.data.tags?.length,
     url_status: data.data.status
   } : null;
 

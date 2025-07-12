@@ -1,9 +1,12 @@
 import React from 'react';
-import Card  from '@mui/material/Card';
+import Card from '@mui/material/Card';
 import CrawlJobsTable from '../components/CrawlJobsTable';
 import CrawlJobsTableSkeleton from '../components/CrawlJobsTableSkeleton';
 import { useUrlInputHandlers } from '../../hooks/useUrlInputHandlers';
 import { useCrawlHistory } from '../../hooks/apis/useCrawlHistory';
+import Button from '@mui/material/Button';
+import { Alert, Typography } from '@mui/material';
+import URLInputForm from './URLInputForm';
 
 const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const { handleViewDetails, handleCancel, isLoading } = useUrlInputHandlers();
@@ -24,20 +27,39 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
     </Card>
   }
 
-  return (
-    <Card className={`w-full ${className}`}>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Crawl Jobs</h3>
-
-        <CrawlJobsTable
-          key={jobs?.length}
-          jobs={jobs || []}
-          onViewDetails={handleViewDetails}
-          onCancel={handleCancel}
-        />
-
+  if (error) {
+    return <div className={`flex flex-col justify-center w-full gap-4 ${className}`}>
+      <Alert severity="error" className="w-full">
+        {error?.message || 'No crawl jobs found.'}
+      </Alert>
+      <div className="flex justify-center ">
+        <Button variant='contained' onClick={refetch}>Retry</Button>
       </div>
-    </Card>
+
+    </div>;
+  }
+
+  if (!jobs?.length) {
+    return <div className={`flex flex-col justify-center w-full gap-12 ${className}`}>
+      <Alert severity="info" className="w-full">
+        No crawl jobs found. Start a new crawl job to see results.
+      </Alert>
+      <URLInputForm />
+    </div>;
+  }
+
+  return (
+    <div className={`flex flex-col gap-4 w-full ${className}`}>
+
+      <CrawlJobsTable
+        key={jobs?.length}
+        jobs={jobs || []}
+        onViewDetails={handleViewDetails}
+        onCancel={handleCancel}
+      />
+
+    </div>
+
   );
 };
 

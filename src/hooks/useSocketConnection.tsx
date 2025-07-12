@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Socket } from 'socket.io-client';
 import { createSocketConnection, getAuthToken } from '../utils/socketUtils';
 import useCrawlStore from '../stores/crawl';
-import type { CrawlSocketEvent } from '../types/apis/crawl';
+import type { SocketMessage } from '../types/apis/crawl';
 
 interface UseSocketResult {
     socket: Socket | null;
@@ -28,7 +28,7 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
             socketRef.current.close();
         }
 
-        const handleCrawlQueued = (event: CrawlSocketEvent) => {
+        const handleCrawlQueued = (event: SocketMessage) => {
             console.log('Crawl queued:', event);
             updateJob(event.jobId, {
                 ...event,
@@ -37,42 +37,43 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
             });
         };
 
-        const handleCrawlStarted = (event: CrawlSocketEvent) => {
+        const handleCrawlStarted = (event: SocketMessage) => {
             console.log('Crawl started:', event);
             updateJob(event.jobId, {
+                ...event,
                 status: 'started',
                 progress: 25
             });
         };
 
-        const handleCrawlHalfCompleted = (event: CrawlSocketEvent) => {
+        const handleCrawlHalfCompleted = (event: SocketMessage) => {
             console.log('Crawl half completed:', event);
             updateJob(event.jobId, {
+                ...event,
                 status: 'started', // Keep as started but with partial data
-                data: event.data, // Partial data available
-                progress: 75
+                progress: 75,
             });
         };
 
-        const handleCrawlCompleted = (event: CrawlSocketEvent) => {
+        const handleCrawlCompleted = (event: SocketMessage) => {
             console.log('Crawl completed:', event);
             updateJob(event.jobId, {
+                ...event,
                 status: 'completed',
-                data: event.data,
                 progress: 100
             });
         };
 
-        const handleCrawlError = (event: CrawlSocketEvent) => {
+        const handleCrawlError = (event: SocketMessage) => {
             console.log('Crawl error:', event);
             updateJob(event.jobId, {
+                ...event,
                 status: 'error',
-                error: event.error || 'Unknown error occurred',
                 progress: 0
             });
         };
 
-        const handleCrawlCancelled = (event: CrawlSocketEvent) => {
+        const handleCrawlCancelled = (event: SocketMessage) => {
             console.log('Crawl cancelled:', event);
             updateJob(event.jobId, {
                 status: 'cancelled',

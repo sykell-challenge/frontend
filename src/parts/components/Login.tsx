@@ -5,6 +5,7 @@ import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
+import { Box, FormControl, FormLabel } from '@mui/material';
 
 const Login = () => {
     const { login } = useLogin();
@@ -18,35 +19,66 @@ const Login = () => {
 
     return (<>
         {error && <Alert severity="error">{error}</Alert>}
-        <form className="p-4 flex flex-col gap-4" onSubmit={async (e) => {
-            e.preventDefault();
+        <Box
+            component="form"
+            className="p-4"
+            noValidate
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                gap: 2
+            }}
+            onSubmit={async (e) => {
+                e.preventDefault();
 
-            const [success, data] = await login(username, password);
-            if (success) {
-                localStorage.setItem('token', data.token);
-                navigate({ to: '/' });
-            } else {
-                console.error('Login failed:', data);
-                setError(data?.response?.data?.error || 'Login failed');
-            }
-        }}>
-            <TextField
-                placeholder='Username'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
+                const [success, data] = await login(username, password);
+                if (success) {
+                    localStorage.setItem('token', data.token);
+                    navigate({ to: '/' });
+                } else {
+                    console.error('Login failed:', data);
+                    setError(data?.response?.data?.error || 'Login failed');
+                }
+            }}>
+            <FormControl>
+                <FormLabel htmlFor="username">Username</FormLabel>
 
-                placeholder='Password'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <TextField
+                    id="username"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    fullWidth
+                    variant="outlined"
+                    placeholder='username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </FormControl>
+
+            <FormControl>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <TextField
+                    id="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    fullWidth
+                    variant="outlined"
+                    placeholder='********'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </FormControl>
+
             <Button
                 className=' w-full py-2 mt-4 '
                 type="submit"
+                fullWidth
+                variant="contained"
             >Login</Button>
-        </form>
+        </Box >
     </>
     )
 }

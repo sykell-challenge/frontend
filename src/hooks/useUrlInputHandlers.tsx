@@ -1,8 +1,6 @@
 import useCrawlStore from '../stores/crawl';
 import { useUrlValidation } from './useUrlValidation';
 import { useCrawlActions } from './useCrawlActions';
-import axios from 'axios';
-import React from 'react';
 
 export const useUrlInputHandlers = () => {
   const url = useCrawlStore((state) => state.url);

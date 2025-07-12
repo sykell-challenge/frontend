@@ -4,6 +4,7 @@ import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import { Box, FormControl, FormLabel } from '@mui/material';
 
 const Register = () => {
     const { register } = useRegister();
@@ -56,43 +57,81 @@ const Register = () => {
         <>
             {error && <Alert severity="error">{error}</Alert>}
             {success && <Alert severity="success">{success}</Alert>}
-            <form className="p-4 flex flex-col gap-4" onSubmit={handleSubmit}>
-                <TextField
-                    className='p-2'
-                    placeholder='Username'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <TextField
-                    className='p-2'
-                    placeholder='Email'
-                    type='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                    className='p-2'
-                    placeholder='Password'
-                    type='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <TextField
-                    className='p-2'
-                    placeholder='Confirm Password'
-                    type='password'
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
+            <Box
+                component="form"
+                className="p-4"
+                noValidate
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: 2
+                }}
+                onSubmit={handleSubmit}
+            >
+                <FormControl>
+                    <FormLabel htmlFor="username">Username</FormLabel>
+
+                    <TextField
+                        id="username"
+                        type="text"
+                        autoComplete="username"
+                        required
+                        fullWidth
+                        variant="outlined"
+                        placeholder='username'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <TextField
+                        id="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        fullWidth
+                        variant="outlined"
+                        placeholder='test@example.com'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <TextField
+                        id="password"
+                        type="password"
+                        autoComplete="new-password"
+                        required
+                        fullWidth
+                        variant="outlined"
+                        placeholder='*******'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl>
+                    <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
+                    <TextField
+                        id="confirmPassword"
+                        className='p-2'
+                        placeholder='********'
+                        type='password'
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </FormControl>
                 <Button
-                    label="Register"
+                    variant="contained"
                     className='w-full py-2 mt-4'
                     type="submit"
-                />
-            </form>
+                >
+                    Register
+                </Button>
+            </Box>
         </>
     );
 };

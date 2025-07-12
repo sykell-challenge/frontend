@@ -29,7 +29,6 @@ const CrawlResultsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ c
       <CrawlResultsLayout 
         data={selectedJob.data}
         url={selectedJob.url}
-        title={title}
         isInProgress={isInProgress}
         className={className}
       />

@@ -5,11 +5,12 @@ import TagsBarChart from './TagsBarChart';
 import URLPieChart from './URLPieChart';
 import WebsiteInformation from './WebsiteInformation';
 import type { CrawlResponse } from '../../types/apis/crawl';
-
+import { Alert, Card, IconButton, Paper } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from '@tanstack/react-router';
 interface CrawlResultsLayoutProps {
   data: CrawlResponse;
   url: string;
-  title: string;
   isInProgress?: boolean;
   className?: string;
 }
@@ -17,57 +18,80 @@ interface CrawlResultsLayoutProps {
 const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
   data,
   url,
-  title,
   isInProgress = false,
   className
 }) => {
   const colors = ['#358C84', '#205B73', '#307B8C'];
 
+  const navigate = useNavigate();
+
   return (
-    <div className={`w-full flex flex-col items-center justify-start ${className}`}>
-
-      <div className="flex justify-between items-center mb-6">
-        <Title title="Crawl Results" />
-      </div>
-
+    <Paper className={`w-full h-full flex flex-col items-start justify-start ${className}`}>
       {isInProgress && (
-        <div className="mb-4 p-3 bg-blue-100 border border-blue-400 text-blue-700 rounded">
-          <strong>Note:</strong> This crawl is still in progress. The data shown below is partial and will be updated when the crawl completes.
-        </div>
+        <Alert severity="info" className="w-full flex justify-center items-center">
+          This crawl is still in progress. The data shown below is partial and will be updated when the crawl completes.
+        </Alert>
       )}
 
-      <div className="flex flex-col gap-8">
+      <div className="flex justify-center items-center my-6 flex-col sm:flex-row w-full relative">
+        <div className="absolute left-4">
+          <IconButton
+            onClick={() => navigate({ to: "/results" })}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </div>
+        <Title title="Crawl Results" className="mx-auto" />
+      </div>
+
+
+      <div className="flex flex-wrap gap-4 w-full h-full">
         <WebsiteInformation
+          className="w-full md:max-h-32"
           title={data.title}
           loginPageAvailable={data.login_form}
           url={url}
           htmlVersion={data.html_version}
         />
-        <div className="flex gap-32">
-          <div className="flex flex-col gap-8">
-            <URLPieChart
-              internalUrlCount={data.links.filter(link => link.type === 'internal').length}
-              externalUrlCount={data.links.filter(link => link.type === 'external').length}
-              brokenUrlCount={data.links.filter(link => link.type === 'inaccessible').length}
-            />
-            <TagsBarChart
-              tags={data?.tags?.map(tag => ({
-                name: tag.tagName,
-                count: tag.count,
-                color: colors[data.tags.indexOf(tag) % colors.length]
+
+        <div className="flex flex-col w-full gap-4 md:flex-row lg:w-1/3 lg:flex-col">
+          <div className="w-full h-44 md:h-56 lg:h-60">
+            {data.tags &&
+              <TagsBarChart
+                tags={data?.tags?.map(tag => ({
+                  name: tag.tagName,
+                  count: tag.count,
+                  color: colors[data.tags.indexOf(tag) % colors.length]
+                })) || []}
+              />
+            }
+          </div>
+
+          <div className="w-full h-28 md:h-36 lg:h-40">
+            {data.links && data.links.length &&
+              <URLPieChart
+                internalUrlCount={data.links.filter(link => link.type === 'internal').length}
+                externalUrlCount={data.links.filter(link => link.type === 'external').length}
+                brokenUrlCount={data.links.filter(link => link.type === 'inaccessible').length}
+              />
+            }
+          </div>
+        </div>
+
+        <div className="w-full lg:flex-1 lg:w-7/12 min-h-[400px]">
+          {
+            data.links && data.links.length && <LinksTable
+              links={data.links.map((link) => ({
+                link: link.link,
+                type: link.type,
+                status: link.status_code.toString()
               })) || []}
             />
-          </div>
-          <LinksTable
-            links={data.links.map((link) => ({
-              link: link.link,
-              type: link.type,
-              status: link.status_code.toString()
-            })) || []}
-          />
+          }
         </div>
+
       </div>
-    </div>
+    </Paper>
 
   );
 };

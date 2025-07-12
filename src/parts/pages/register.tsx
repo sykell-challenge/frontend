@@ -1,14 +1,18 @@
-import Title from "../components/Title";
+
 import RegisterTemplate from "../templates/Register";
-import Welcome from "../templates/Welcome";
+
+import { Card, SignInContainer } from "./login";
+
 
 const Register = () => {
   return (
-    <div className="w-full flex flex-col items-center justify-center">
-      <Title title="Welcome!" />
-      <div className="flex gap-32 mt-24">
-        <Welcome />
-        <RegisterTemplate />
+    <div className="w-full h-full flex flex-col items-center">
+      <div className="flex">
+        <SignInContainer direction="column" justifyContent="space-between">
+          <Card>
+            <RegisterTemplate />
+          </Card>
+        </SignInContainer>
       </div>
     </div>
   );

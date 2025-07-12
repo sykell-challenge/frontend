@@ -34,7 +34,7 @@ const useApiRequest = <T = any>(config: ApiRequestConfig) => {
         { manual: config.manual !== false } // default to manual: true
     );
 
-    async function makeRequest(requestData?: Record<string, any>, dynamicEndpoint?: string) {
+    async function makeRequest(requestData?: Record<string, any>, dynamicEndpoint?: string): Promise<[boolean, T | Error]> {
         try {
             const response = await execute({ 
                 data: requestData,
@@ -42,7 +42,7 @@ const useApiRequest = <T = any>(config: ApiRequestConfig) => {
             });            
             return [true, response.data];
         } catch (error) {
-            return [false, error];
+            return [false, error as Error];
         }
     }
 

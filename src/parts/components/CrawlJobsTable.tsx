@@ -47,6 +47,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
     if (['queued', 'started', 'running'].includes(rowData.status)) {
       return (
         <LinearProgress
+          variant='determinate'
           value={rowData.progress || 0}
           style={{ height: '8px', width: '100px' }}
         />
@@ -80,7 +81,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
 
   const urlBodyTemplate = (rowData: CrawlJob) => {
     return (
-      <a className="max-w-xs truncate" href={"/results/" + rowData.urlId}>
+      <a className="truncate" href={"/results/" + rowData.urlId}>
         {rowData.url}
       </a>
     );
@@ -94,8 +95,8 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
 
   return (
     <div className="w-full">
-      <TableContainer component={Paper} sx={{ minWidth: 650 }} aria-label="crawl jobs table">
-        <Table>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="crawl jobs table">
           <TableHead>
             <TableRow>
               <TableCell>URL</TableCell>

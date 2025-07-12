@@ -18,9 +18,10 @@ const URLPieChart: React.FC<URLPieChartProps> = ({
       data: [
         { id: 0, value: internalUrlCount, label: "Internal" },
         { id: 1, value: externalUrlCount, label: "External" },
-        { id: 2, value: externalUrlCount, label: "Inaccessible" },
+        { id: 2, value: brokenUrlCount, label: "Inaccessible" },
       ]
-    }]} />
+    }]} 
+    />
   );
 }
 
