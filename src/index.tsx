@@ -15,7 +15,7 @@ if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <SocketProvider url="http://localhost:8080">
+      <SocketProvider url={import.meta.env.BACKEND_URL}>
         <RouterProvider router={router} />
       </SocketProvider>
     </React.StrictMode>,
