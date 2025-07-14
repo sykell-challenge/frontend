@@ -3,8 +3,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import useApiRequest from '../../hooks/apis/useAuthRequest';
-import { useNavigate } from '@tanstack/react-router';
+import { useLocation, useNavigate } from '@tanstack/react-router';
 import type { Response } from '../../types/apis/postCrawl';
+import useJobsStore from '../../stores/jobs';
 
 const CrawlForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const [url, setUrl] = React.useState('');
@@ -18,6 +19,8 @@ const CrawlForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }
 
   const navigate = useNavigate();
 
+  const addJob = useJobsStore((state) => state.addJob);
+
   async function onAddUrlClick(urlInput: string = url) {
     if (!urlInput.trim()) {
       setError("Please enter a valid URL.");
@@ -27,6 +30,8 @@ const CrawlForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }
     if (!urlInput.startsWith("http")) {
       urlInput = "http://" + urlInput;
     }
+
+    setError("");
 
     const [success, response] = await makeCrawlRequest({ url: urlInput });
     if (!success) {
@@ -47,7 +52,26 @@ const CrawlForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }
       setError("Invalid response from server. No ID found.");
       return;
     }
-    navigate({ to: `/results/${response.data.ID}` });
+
+    if (response.alreadyCrawled) {
+      navigate({ to: `/results/${response.data.ID}` });
+      return;
+    }
+    addJob({
+      ID: response.data.ID,
+      jobId: response.data.ID.toString(),
+      url: response.data.url,
+      progress: 0,
+      status: 'queued',
+    });
+
+    setUrl('');
+
+    if (location.pathname.includes('/results')) {
+      return
+    }
+
+    navigate({ to: `/results` });
   }
 
   return (

@@ -1,9 +1,9 @@
 import React from 'react';
-import useCrawlStore from '../stores/crawl';
+import useJobsStore from '../stores/jobs';
 
 export const useUrlValidation = () => {
   const [validationError, setValidationError] = React.useState<string | null>(null);
-  const jobs = useCrawlStore((state) => state.jobs);
+  const jobs = useJobsStore((state) => state.jobs);
 
   const validateUrl = (url: string): string | null => {
     if (!url.trim()) {

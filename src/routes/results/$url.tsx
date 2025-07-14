@@ -7,7 +7,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import useApiRequest from '../../hooks/apis/useAuthRequest';
 import type { URL } from '../../types/urls';
 import React from 'react';
-import useUrlStore from '../../stores/job';
+import useUrlStore from '../../stores/url';
 
 export const Route = createFileRoute('/results/$url')({
   component: RouteComponent,
@@ -89,7 +89,7 @@ function RouteComponent() {
     <CrawlResultsLayout
       data={url}
       url={url.url}
-      isInProgress={!isCompleted}
+      status={url.status}
     />
   );
 }

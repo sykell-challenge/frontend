@@ -4,19 +4,59 @@ import CrawlJobsTable from '../components/CrawlJobsTable';
 import CrawlJobsTableSkeleton from '../components/CrawlJobsTableSkeleton';
 import Button from '@mui/material/Button';
 import { Alert, Typography } from '@mui/material';
-import CrawlForm from '../components/CrawlForm';
 import useApiRequest from '../../hooks/apis/useAuthRequest';
 import type { CrawlJob } from '../../types';
+import useJobsStore from '../../stores/jobs';
 
 const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
-  const { data: jobs, loading, error, refetch } = useApiRequest<Array<CrawlJob>>({
+  const { data, loading, error, refetch } = useApiRequest<Array<CrawlJob>>({
     endpoint: "/crawl-history",
     method: "GET",
     requiresAuth: true,
     manual: false,
   });
 
-  if (loading) {
+  const [firstLoad, setFirstLoad] = React.useState(true);
+
+  const jobs = useJobsStore((state) => state.jobs);
+  const setJobs = useJobsStore((state) => state.setJobs);
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    const tick = async () => {
+      await refetch();
+      if (!cancelled) {
+        console.log(parseInt(process.env.POLLING_INTERVAL || '5000'), 'ms');
+        setTimeout(tick, parseInt(process.env.POLLING_INTERVAL || '5000'));
+      }
+    };
+
+    tick();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!firstLoad) {
+      return;
+    }
+    if (!data) {
+      return
+    }
+    console.log("Setting jobs from API data");
+    setJobs(data);
+  }, [data]);
+
+  React.useEffect(() => {
+    if (jobs) {
+      setFirstLoad(false);
+    }
+  }, [jobs]);
+
+  if (loading && firstLoad) {
     return <Card className={`w-full ${className}`}>
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Crawl Jobs</h3>
@@ -45,7 +85,6 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
       <Alert severity="info" className="w-full">
         No crawl jobs found. Start a new crawl job to see results.
       </Alert>
-      <CrawlForm />
     </div>;
   }
 
@@ -53,8 +92,6 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
     <div className={`flex flex-col gap-4 w-full ${className}`}>
 
       <CrawlJobsTable
-        key={jobs?.length}
-        jobs={jobs || []}
       />
 
     </div>

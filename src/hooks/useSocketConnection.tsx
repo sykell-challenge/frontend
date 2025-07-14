@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import { Socket } from 'socket.io-client';
 import { createSocketConnection, getAuthToken } from '../utils/socketUtils';
-import useCrawlStore from '../stores/crawl';
+import useJobsStore from '../stores/jobs';
 import type { SocketMessage } from '../types/apis/crawl';
-import useUrlStore from '../stores/job';
+import useUrlStore from '../stores/url';
 
 interface UseSocketResult {
     socket: Socket | null;
@@ -15,9 +15,10 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
     const [connected, setConnected] = useState(false);
     const socketRef = useRef<Socket | null>(null);
     const urlRef = useRef<string | null>(null);
-    const { updateJob } = useCrawlStore();
     const urlStoreUrl = useUrlStore((state) => state.url);
     const setUrl = useUrlStore((state) => state.setUrl);
+
+    const updateJob = useJobsStore((state) => state.updateJob);
 
     useEffect(() => {
         // Only create a new socket if we don't have one or URL changed
@@ -33,29 +34,17 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
 
         const handleCrawlQueued = (event: SocketMessage) => {
             console.log('Crawl queued:', event);
-            updateJob(event.jobId, {
-                ...event,
-                progress: 0,
-                status: 'queued',
-            });
+            updateJob(event);
         };
 
         const handleCrawlStarted = (event: SocketMessage) => {
             console.log('Crawl started:', event);
-            updateJob(event.jobId, {
-                ...event,
-                status: 'started',
-                progress: 25
-            });
+            updateJob(event);
         };
 
         const handleCrawlHalfCompleted = (event: SocketMessage) => {
             console.log('Crawl half completed:', event);
-            updateJob(event.jobId, {
-                ...event,
-                status: 'started', // Keep as started but with partial data
-                progress: 75,
-            });
+            updateJob(event);
             setUrl({
                 ...urlStoreUrl,
                 links: event.links || [],
@@ -73,11 +62,7 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
 
         const handleCrawlCompleted = (event: SocketMessage) => {
             console.log('Crawl completed:', event);
-            updateJob(event.jobId, {
-                ...event,
-                status: 'completed',
-                progress: 100
-            });
+            updateJob(event);
             setUrl({
                 ...urlStoreUrl,
                 links: event.links || [],
@@ -95,19 +80,12 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
 
         const handleCrawlError = (event: SocketMessage) => {
             console.log('Crawl error:', event);
-            updateJob(event.jobId, {
-                ...event,
-                status: 'error',
-                progress: 0
-            });
+            updateJob(event);
         };
 
         const handleCrawlCancelled = (event: SocketMessage) => {
             console.log('Crawl cancelled:', event);
-            updateJob(event.jobId, {
-                status: 'cancelled',
-                progress: 0
-            });
+            updateJob(event);
         };
 
         const token = getAuthToken();

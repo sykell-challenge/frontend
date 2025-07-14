@@ -25,6 +25,12 @@ export default defineConfig({
       'import.meta.env.NODE_ENV': JSON.stringify(
         process.env.NODE_ENV || 'development'
       ),
+      'process.env.POLLING_INTERVAL': JSON.stringify(
+        process.env.POLLING_INTERVAL || '5000'
+      ),
+      'import.meta.env.POLLING_INTERVAL': JSON.stringify(
+        process.env.POLLING_INTERVAL || '5000'
+      ),
     },
   },
   tools: {

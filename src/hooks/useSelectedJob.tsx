@@ -1,11 +1,11 @@
 import React from 'react';
-import useCrawlStore from '../stores/crawl';
+import useJobsStore from '../stores/jobs';
 
 export const useSelectedJob = () => {
-  const selectedJobId = useCrawlStore((state) => state.selectedJobId);
-  const setSelectedJobId = useCrawlStore((state) => state.setSelectedJobId);
+  const selectedJobId = useJobsStore((state) => state.selectedJobId);
+  const setSelectedJobId = useJobsStore((state) => state.setSelectedJobId);
   
-  const selectedJob = useCrawlStore(
+  const selectedJob = useJobsStore(
     React.useCallback((state) => {
       if (!state.selectedJobId) return null;
       return state.jobs.find(job => job.jobId === state.selectedJobId) || null;

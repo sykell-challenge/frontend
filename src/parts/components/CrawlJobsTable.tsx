@@ -16,18 +16,29 @@ import {
   type GridColDef
 } from '@mui/x-data-grid';
 import { useNavigate } from '@tanstack/react-router';
+import useApiRequest from '../../hooks/apis/useAuthRequest';
+import { BACKEND_ROUTES } from '../../consts/backendRoutes';
+import { Alert, Snackbar } from '@mui/material';
+import useJobsStore from '../../stores/jobs';
+
 
 interface CrawlJobsTableProps {
-  jobs: CrawlJob[];
+
 }
 
+const paginationModel = { page: 0, pageSize: 5 };
 
 
-const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
-  jobs,
-}) => {
+const useColumns = (setMessage: React.Dispatch<React.SetStateAction<string>>) => {
   const navigate = useNavigate();
-  
+
+  const { makeRequest: cancelCrawlRequest } = useApiRequest({
+    endpoint: "/crawl",
+    method: "DELETE",
+    requiresAuth: true,
+    manual: true,
+  });
+
   const columns: GridColDef[] = [
     { field: 'url', headerName: 'URL', flex: 1, align: 'left', renderCell: (params) => <a className="truncate" href={"/results/" + params.row.urlId}>{params.value}</a> },
     {
@@ -45,7 +56,8 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
         </div>
       )
     },
-    { field: 'createdAt', headerName: 'Created At', width: 180, renderCell: (params) => new Date(params.row.startedAt as string).toLocaleString() },
+    { field: 'createdAt', headerName: 'Created At', width: 180, renderCell: (params) => params.row.startedAt ? new Date(params.row.startedAt as string).toLocaleString() : '-' },
+    { field: 'completedAt', headerName: 'Completed At', width: 180, renderCell: (params) => params.row.completedAt ? new Date(params.row.completedAt as string).toLocaleString() : '-' },
     {
       field: 'actions', headerName: 'Actions', width: 150, type: 'actions',
       getActions: (params: any) => {
@@ -62,22 +74,47 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
             icon={<ClearOutlinedIcon />}
             label="Cancel Job"
             showInMenu
+            onClick={async () => {
+              if (params.row.status !== 'running') {
+                setMessage('Job is not running, cannot cancel');
+                console.warn('Job is not running, cannot cancel');
+                return;
+              }
+              const [success, response] = await cancelCrawlRequest({ id: params.row.id }, BACKEND_ROUTES.STOP_CRAWL(params.row.jobId));
+              if (success) {
+                // navigate({ to: '/results' });
+                setMessage('Crawl job cancelled successfully');
+              } else {
+                console.error('Failed to cancel crawl job:', response);
+              }
+            }}
           />
         ]
       }
     }
   ];
-  const paginationModel = { page: 0, pageSize: 5 };
+
+  return columns;
+}
+
+const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
+
+}) => {
+  const [message, setMessage] = React.useState("");
+
+  const columns = useColumns(setMessage);
+
+  const jobs = useJobsStore((state) => state.jobs);
 
   return (
     <div className="w-full overflow-auto">
       <div className="min-w-[1000px] h-[400px] max-h-[600px]">
         <DataGrid
           label='Crawl Jobs Table'
-          rows={jobs.map((job, index) => ({
+          rows={jobs?.map((job, index) => ({
             id: index,
             ...job,
-          }))}
+          })) || []}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           autoPageSize
@@ -85,6 +122,18 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
           showToolbar
         />
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        open={message !== ""}
+        // autoHideDuration={6000}
+        onClose={() => setMessage("")}
+        message={message}
+        action={
+          <Button color="inherit" onClick={() => setMessage("")}>
+            Close
+          </Button>
+        }
+      />
     </div>
   );
 };

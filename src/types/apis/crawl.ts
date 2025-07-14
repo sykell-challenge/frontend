@@ -15,9 +15,10 @@ export type CrawlJobResponse = {
 export type CrawlStatus = 'queued' | 'running' | 'completed' | 'error' | 'cancelled';
 
 export type SocketMessage = {
+  ID: number;
   jobId: string;
   url: string;
-  urlId: string;
+  urlId: number;
   status: string;
   startedAt?: string;
   completedAt?: string;

@@ -1,14 +1,14 @@
-import useCrawlStore from '../stores/crawl';
+import useJobsStore from '../stores/jobs';
 import { useUrlValidation } from './useUrlValidation';
 import { useCrawlActions } from './useCrawlActions';
 
 export const useUrlInputHandlers = () => {
-  const url = useCrawlStore((state) => state.url);
-  const setUrl = useCrawlStore((state) => state.setUrl);
-  const jobs = useCrawlStore((state) => state.jobs);
-  const addJob = useCrawlStore((state) => state.addJob);
-  const selectedJobId = useCrawlStore((state) => state.selectedJobId);
-  const setSelectedJobId = useCrawlStore((state) => state.setSelectedJobId);
+  const url = useJobsStore((state) => state.url);
+  const setUrl = useJobsStore((state) => state.setUrl);
+  const jobs = useJobsStore((state) => state.jobs);
+  const addJob = useJobsStore((state) => state.addJob);
+  const selectedJobId = useJobsStore((state) => state.selectedJobId);
+  const setSelectedJobId = useJobsStore((state) => state.setSelectedJobId);
 
   // Use smaller, focused hooks
   const { validationError, setValidationError, validateUrl, clearValidationError } = useUrlValidation();

@@ -11,14 +11,14 @@ import { useNavigate } from '@tanstack/react-router';
 interface CrawlResultsLayoutProps {
   data: CrawlResponse;
   url: string;
-  isInProgress?: boolean;
+  status?: string;
   className?: string;
 }
 
 const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
   data,
   url,
-  isInProgress = false,
+  status = 'done',
   className
 }) => {
 
@@ -26,9 +26,21 @@ const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
 
   return (
     <Paper className={`w-full h-full flex flex-col items-start justify-start ${className}`}>
-      {isInProgress && (
+      {status === 'running' && (
         <Alert severity="info" className="w-full flex justify-center items-center">
           This crawl is still in progress. The data shown below is partial and will be updated when the crawl completes.
+        </Alert>
+      )}
+
+      {status === 'error' && (
+        <Alert severity="error" className="w-full flex justify-center items-center">
+          An error occurred while crawling this URL. Please try again later.
+        </Alert>
+      )}
+
+      {status === 'cancelled' && (
+        <Alert severity="warning" className="w-full flex justify-center items-center">
+          This crawl was cancelled.
         </Alert>
       )}
 
