@@ -4,7 +4,16 @@ const useCheckLogin = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const token = localStorage.getItem('token')
+    let token = localStorage.getItem('token')
+
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null
+
+    const expirationTime = decodedToken ? decodedToken.exp * 1000 : 0
+
+    if (expirationTime && expirationTime < Date.now()) {
+        localStorage.removeItem('token')
+        token = null
+    }
 
     if (!token && location.pathname === '/register') {
         return false
@@ -13,7 +22,7 @@ const useCheckLogin = () => {
     if (!token) {
         navigate({ to: '/login' })
         return false
-    }    
+    }
 
     return true
 }

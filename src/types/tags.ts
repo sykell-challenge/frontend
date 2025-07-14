@@ -1,7 +1,6 @@
 export type Tag = {
-    name: string;
+    tagName: string;
     count: number;
-    color: string;
 };
 
 export type TagsBarChartProps = {

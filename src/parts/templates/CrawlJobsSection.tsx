@@ -6,7 +6,7 @@ import { useUrlInputHandlers } from '../../hooks/useUrlInputHandlers';
 import { useCrawlHistory } from '../../hooks/apis/useCrawlHistory';
 import Button from '@mui/material/Button';
 import { Alert, Typography } from '@mui/material';
-import URLInputForm from './URLInputForm';
+import CrawlForm from '../components/CrawlForm';
 
 const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const { handleViewDetails, handleCancel, isLoading } = useUrlInputHandlers();
@@ -44,7 +44,7 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
       <Alert severity="info" className="w-full">
         No crawl jobs found. Start a new crawl job to see results.
       </Alert>
-      <URLInputForm />
+      <CrawlForm />
     </div>;
   }
 

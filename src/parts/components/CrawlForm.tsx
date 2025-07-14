@@ -4,11 +4,12 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import useApiRequest from '../../hooks/apis/useAuthRequest';
 import { useNavigate } from '@tanstack/react-router';
+import type { Response } from '../../types/apis/postCrawl';
 
-const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
+const CrawlForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const [url, setUrl] = React.useState('');
   const [error, setError] = React.useState("");
-  const { makeRequest: makeCrawlRequest, loading: isLoading, } = useApiRequest<any>({
+  const { makeRequest: makeCrawlRequest, loading: isLoading, } = useApiRequest<Response>({
     endpoint: "/crawl",
     method: "POST",
     requiresAuth: true,
@@ -17,7 +18,7 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
 
   const navigate = useNavigate();
 
-  async function handleAddUrl(urlInput: string = url) {
+  async function onAddUrlClick(urlInput: string = url) {
     if (!urlInput.trim()) {
       setError("Please enter a valid URL.");
       return;
@@ -32,20 +33,21 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
       setError("Failed to add URL. Please try again later.");
       return;
     }
-
-    if (!response) {
-      setError("No response from server.");
+    if (response instanceof Error) {
+      setError("Failed to add URL. Please try again later.");
       return;
     }
-    if (!response.ID) {
-      if(response.error) {
-        setError(response.error);
-        return;
-      }
+
+    if (response.error) {
+      setError(response.error.message || "An error occurred while adding the URL, try again later or try a different URL.");
+      return;
+    }
+
+    if (!response.data.ID) {
       setError("Invalid response from server. No ID found.");
       return;
     }
-    navigate({ to: `/results/${response.ID}` });
+    navigate({ to: `/results/${response.data.ID}` });
   }
 
   return (
@@ -53,7 +55,7 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
     <div className={"flex flex-col gap-4 w-full" + (className ? ` ${className}` : '')}>
       <form className="flex flex-col sm:flex-row gap-4" onSubmit={(e) => {
         e.preventDefault()
-        handleAddUrl()
+        onAddUrlClick()
       }}>
         <TextField
           value={url}
@@ -77,4 +79,4 @@ const URLInputForm: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ classNam
   );
 };
 
-export default URLInputForm;
+export default CrawlForm;

@@ -7,7 +7,14 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Chip from '@mui/material/Chip';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  Toolbar,
+  ToolbarButton,
+
+  type GridColDef
+} from '@mui/x-data-grid';
 
 interface CrawlJobsTableProps {
   jobs: CrawlJob[];
@@ -41,26 +48,19 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
     },
     { field: 'createdAt', headerName: 'Created At', width: 180, renderCell: (params) => new Date(params.row.startedAt as string).toLocaleString() },
     {
-      field: 'actions', headerName: 'Actions', width: 150, renderCell: (params) => (
-        <div className="flex gap-2 w-full justify-center items-center h-full">
-          {(params.row.status === 'completed' || (['started', 'running'].includes(params.row.status) && params.row.data)) && (
-            <Button
-              startIcon={<VisibilityOutlinedIcon />}
-              size="small"
-              className="p-button-text"
-              onClick={() => onViewDetails(params.row.jobId)}
-            />
-          )}
-          {['queued', 'started', 'running'].includes(params.row.status) && (
-            <Button
-              startIcon={<ClearOutlinedIcon />}
-              size="small"
-              className="p-button-text p-button-danger"
-              onClick={() => onCancel(params.row.jobId)}
-            />
-          )}
-        </div>
-      )
+      field: 'actions', headerName: 'Actions', width: 150, type: 'actions',
+      getActions: (params: any) => {
+        return [
+          <GridActionsCellItem
+            icon={<VisibilityOutlinedIcon />}
+            label="View Details"
+            onClick={() => onViewDetails(params.row.jobId)} />,
+          <GridActionsCellItem
+            icon={<ClearOutlinedIcon />}
+            label="Cancel Job"
+            onClick={() => onCancel(params.row.jobId)} />
+        ]
+      }
     }
   ];
   const paginationModel = { page: 0, pageSize: 5 };
@@ -77,6 +77,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           autoPageSize
+          checkboxSelection
         />
       </div>
     </div>
