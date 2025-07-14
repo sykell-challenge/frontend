@@ -12,6 +12,9 @@
 node_modules
 dist/
 
+# Playwright test results
+test-results/
+
 # Profile
 .rspack-profile-*/
 
