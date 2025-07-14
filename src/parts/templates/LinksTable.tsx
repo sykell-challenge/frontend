@@ -8,7 +8,7 @@ type LinksTableProps = {
 
 const columns: GridColDef[] = [
     { field: 'link', headerName: 'Link', flex: 1 },
-    { field: 'type', headerName: 'Type', width: 150 },
+    { field: 'type', headerName: 'Type', width: 150, type: 'singleSelect', valueOptions: ['internal', 'external', 'inaccessible'] },
     { field: 'status', headerName: 'Status Code', width: 150 },
 ];
 const paginationModel = { page: 0, pageSize: 5 };
@@ -26,6 +26,7 @@ const LinksTable = ({ links }: LinksTableProps) => {
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
             autoPageSize
+            showToolbar
         />
 
     )

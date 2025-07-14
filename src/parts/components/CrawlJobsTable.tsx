@@ -15,11 +15,10 @@ import {
 
   type GridColDef
 } from '@mui/x-data-grid';
+import { useNavigate } from '@tanstack/react-router';
 
 interface CrawlJobsTableProps {
   jobs: CrawlJob[];
-  onViewDetails: (jobId: string) => void;
-  onCancel: (jobId: string) => void;
 }
 
 
@@ -27,6 +26,8 @@ interface CrawlJobsTableProps {
 const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
   jobs,
 }) => {
+  const navigate = useNavigate();
+  
   const columns: GridColDef[] = [
     { field: 'url', headerName: 'URL', flex: 1, align: 'left', renderCell: (params) => <a className="truncate" href={"/results/" + params.row.urlId}>{params.value}</a> },
     {
@@ -52,10 +53,15 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
           <GridActionsCellItem
             icon={<VisibilityOutlinedIcon />}
             label="View Details"
+            showInMenu
+            onClick={() => {
+              navigate({ to: `/results/${params.row.urlId}` });
+            }}
           />,
           <GridActionsCellItem
             icon={<ClearOutlinedIcon />}
             label="Cancel Job"
+            showInMenu
           />
         ]
       }
@@ -65,7 +71,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
 
   return (
     <div className="w-full overflow-auto">
-      <div className="min-w-[1000px]">
+      <div className="min-w-[1000px] h-[400px] max-h-[600px]">
         <DataGrid
           label='Crawl Jobs Table'
           rows={jobs.map((job, index) => ({
@@ -76,6 +82,7 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
           initialState={{ pagination: { paginationModel } }}
           autoPageSize
           checkboxSelection
+          showToolbar
         />
       </div>
     </div>

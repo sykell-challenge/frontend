@@ -21,7 +21,6 @@ const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
   isInProgress = false,
   className
 }) => {
-  const colors = ['#358C84', '#205B73', '#307B8C'];
 
   const navigate = useNavigate();
 

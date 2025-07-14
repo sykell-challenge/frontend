@@ -34,7 +34,7 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
         {error?.message || 'No crawl jobs found.'}
       </Alert>
       <div className="flex justify-center ">
-        <Button variant='contained' onClick={refetch}>Retry</Button>
+        <Button variant='contained' onClick={() => refetch()}>Retry</Button>
       </div>
 
     </div>;
