@@ -10,14 +10,13 @@ import '@fontsource/roboto/700.css';
 
 import './index.css';
 
-
 const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <React.StrictMode>
       <SocketProvider url="http://localhost:8080">
-          <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </SocketProvider>
     </React.StrictMode>,
   );

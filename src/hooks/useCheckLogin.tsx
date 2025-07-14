@@ -1,30 +1,30 @@
-import { useLocation, useNavigate } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router';
 
 const useCheckLogin = () => {
-    const navigate = useNavigate()
-    const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    let token = localStorage.getItem('token')
+  let token = localStorage.getItem('token');
 
-    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
 
-    const expirationTime = decodedToken ? decodedToken.exp * 1000 : 0
+  const expirationTime = decodedToken ? decodedToken.exp * 1000 : 0;
 
-    if (expirationTime && expirationTime < Date.now()) {
-        localStorage.removeItem('token')
-        token = null
-    }
+  if (expirationTime && expirationTime < Date.now()) {
+    localStorage.removeItem('token');
+    token = null;
+  }
 
-    if (!token && location.pathname === '/register') {
-        return false
-    }
+  if (!token && location.pathname === '/register') {
+    return false;
+  }
 
-    if (!token) {
-        navigate({ to: '/login' })
-        return false
-    }
+  if (!token) {
+    navigate({ to: '/login' });
+    return false;
+  }
 
-    return true
-}
+  return true;
+};
 
-export default useCheckLogin
+export default useCheckLogin;

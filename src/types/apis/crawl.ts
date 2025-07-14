@@ -1,18 +1,13 @@
-import type { URL } from "../urls";
+import type { URL } from '../urls';
 
 export type CrawlResponse = URL;
 
-// New types for job-based API
-export type CrawlJobResponse = {
-  jobId: string;
-  message: string;
-  url: string;
-  urlId: string;
-  status: CrawlStatus;
-  startTime: string;
-};
-
-export type CrawlStatus = 'queued' | 'running' | 'completed' | 'error' | 'cancelled';
+export type CrawlStatus =
+  | 'queued'
+  | 'running'
+  | 'completed'
+  | 'error'
+  | 'cancelled';
 
 export type SocketMessage = {
   ID: number;

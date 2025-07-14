@@ -1,8 +1,6 @@
+import RegisterTemplate from '../templates/Register';
 
-import RegisterTemplate from "../templates/Register";
-
-import { Card, SignInContainer } from "./login";
-
+import { Card, SignInContainer } from './login';
 
 const Register = () => {
   return (

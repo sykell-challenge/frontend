@@ -8,114 +8,114 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ResultsIndexRouteImport } from './routes/results/index'
-import { Route as ResultsUrlRouteImport } from './routes/results/$url'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as RegisterRouteImport } from './routes/register';
+import { Route as LoginRouteImport } from './routes/login';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as ResultsIndexRouteImport } from './routes/results/index';
+import { Route as ResultsUrlRouteImport } from './routes/results/$url';
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ResultsIndexRoute = ResultsIndexRouteImport.update({
   id: '/results/',
   path: '/results/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ResultsUrlRoute = ResultsUrlRouteImport.update({
   id: '/results/$url',
   path: '/results/$url',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/results/$url': typeof ResultsUrlRoute
-  '/results': typeof ResultsIndexRoute
+  '/': typeof IndexRoute;
+  '/login': typeof LoginRoute;
+  '/register': typeof RegisterRoute;
+  '/results/$url': typeof ResultsUrlRoute;
+  '/results': typeof ResultsIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/results/$url': typeof ResultsUrlRoute
-  '/results': typeof ResultsIndexRoute
+  '/': typeof IndexRoute;
+  '/login': typeof LoginRoute;
+  '/register': typeof RegisterRoute;
+  '/results/$url': typeof ResultsUrlRoute;
+  '/results': typeof ResultsIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/register': typeof RegisterRoute
-  '/results/$url': typeof ResultsUrlRoute
-  '/results/': typeof ResultsIndexRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/login': typeof LoginRoute;
+  '/register': typeof RegisterRoute;
+  '/results/$url': typeof ResultsUrlRoute;
+  '/results/': typeof ResultsIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/results/$url' | '/results'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/results/$url' | '/results'
-  id: '__root__' | '/' | '/login' | '/register' | '/results/$url' | '/results/'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: '/' | '/login' | '/register' | '/results/$url' | '/results';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/' | '/login' | '/register' | '/results/$url' | '/results';
+  id: '__root__' | '/' | '/login' | '/register' | '/results/$url' | '/results/';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
-  RegisterRoute: typeof RegisterRoute
-  ResultsUrlRoute: typeof ResultsUrlRoute
-  ResultsIndexRoute: typeof ResultsIndexRoute
+  IndexRoute: typeof IndexRoute;
+  LoginRoute: typeof LoginRoute;
+  RegisterRoute: typeof RegisterRoute;
+  ResultsUrlRoute: typeof ResultsUrlRoute;
+  ResultsIndexRoute: typeof ResultsIndexRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/register';
+      path: '/register';
+      fullPath: '/register';
+      preLoaderRoute: typeof RegisterRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/login';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof LoginRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/results/': {
-      id: '/results/'
-      path: '/results'
-      fullPath: '/results'
-      preLoaderRoute: typeof ResultsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/results/';
+      path: '/results';
+      fullPath: '/results';
+      preLoaderRoute: typeof ResultsIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/results/$url': {
-      id: '/results/$url'
-      path: '/results/$url'
-      fullPath: '/results/$url'
-      preLoaderRoute: typeof ResultsUrlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/results/$url';
+      path: '/results/$url';
+      fullPath: '/results/$url';
+      preLoaderRoute: typeof ResultsUrlRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
@@ -125,7 +125,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   ResultsUrlRoute: ResultsUrlRoute,
   ResultsIndexRoute: ResultsIndexRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

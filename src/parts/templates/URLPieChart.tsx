@@ -1,6 +1,5 @@
-import React from 'react'
+import React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
-
 
 type URLPieChartProps = {
   internalUrlCount: number;
@@ -14,15 +13,18 @@ const URLPieChart: React.FC<URLPieChartProps> = ({
   brokenUrlCount,
 }) => {
   return (
-    <PieChart series={[{
-      data: [
-        { id: 0, value: internalUrlCount, label: "Internal" },
-        { id: 1, value: externalUrlCount, label: "External" },
-        { id: 2, value: brokenUrlCount, label: "Inaccessible" },
-      ]
-    }]} 
+    <PieChart
+      series={[
+        {
+          data: [
+            { id: 0, value: internalUrlCount, label: 'Internal' },
+            { id: 1, value: externalUrlCount, label: 'External' },
+            { id: 2, value: brokenUrlCount, label: 'Inaccessible' },
+          ],
+        },
+      ]}
     />
   );
-}
+};
 
-export default URLPieChart
+export default URLPieChart;

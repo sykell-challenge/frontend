@@ -1,16 +1,16 @@
-import useApiRequest from './useAuthRequest'
+import useApiRequest from './useAuthRequest';
 
 const useRegister = () => {
-    const { makeRequest } = useApiRequest({
-        endpoint: "/users",
-        method: "POST",
-    });
+  const { makeRequest } = useApiRequest({
+    endpoint: '/users',
+    method: 'POST',
+  });
 
-    async function register(username: string, password: string, email?: string) {
-        return makeRequest({ username, password, email });
-    }
+  async function register(username: string, password: string, email?: string) {
+    return makeRequest({ username, password, email });
+  }
 
-    return { register };
-}
+  return { register };
+};
 
-export default useRegister
+export default useRegister;

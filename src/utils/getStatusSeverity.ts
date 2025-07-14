@@ -1,13 +1,6 @@
-import type { CrawlStatus } from "../types/apis/crawl";
+import type { CrawlStatus } from '../types/apis/crawl';
 
-
-export type StatusSeverity = 
-  | 'success'
-  | 'primary'
-  | 'default'
-  | 'secondary'
-  | 'info'
-
+type StatusSeverity = 'success' | 'primary' | 'default' | 'secondary' | 'info';
 
 /**
  * Maps crawl job status to PrimeReact severity
@@ -32,7 +25,10 @@ export const getStatusSeverity = (status: CrawlStatus): StatusSeverity => {
 /**
  * Gets display text for status, handling special cases
  */
-export const getStatusDisplayText = (status: CrawlStatus, hasData?: boolean): string => {
+export const getStatusDisplayText = (
+  status: CrawlStatus,
+  hasData?: boolean,
+): string => {
   if (status === 'running' && hasData) {
     return 'PARTIAL DATA';
   }

@@ -6,7 +6,7 @@ const username = `testuser_${Math.random().toString(36).substring(2, 15)}`;
 const testUser = {
   username: username,
   email: `${username}@example.com`,
-  password: 'TestPassword123!'
+  password: 'TestPassword123!',
 };
 
 // Happy path: Register, Login, Search, View Results
@@ -34,7 +34,9 @@ test('Happy path: register, login, search, view results', async ({ page }) => {
 
   // Crawl/Search
   const testUrl = 'https://example.com';
-  await page.getByPlaceholder('http://example.com/foo/bar/index.html').fill(testUrl);
+  await page
+    .getByPlaceholder('http://example.com/foo/bar/index.html')
+    .fill(testUrl);
   await page.getByRole('button', { name: /add url/i }).click();
   // Wait for results page
   await expect(page).toHaveURL(/results/);

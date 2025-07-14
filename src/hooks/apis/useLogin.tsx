@@ -1,17 +1,16 @@
-
-import useApiRequest from './useAuthRequest'
+import useApiRequest from './useAuthRequest';
 
 const useLogin = () => {
-    const { makeRequest } = useApiRequest({
-        endpoint: "/users/login",
-        method: "POST",
-    });
+  const { makeRequest } = useApiRequest({
+    endpoint: '/users/login',
+    method: 'POST',
+  });
 
-    async function login(username: string, password: string) {
-        return makeRequest({ username, password });
-    }
+  async function login(username: string, password: string) {
+    return makeRequest({ username, password });
+  }
 
-    return { login };
-}
+  return { login };
+};
 
-export default useLogin
+export default useLogin;

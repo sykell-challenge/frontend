@@ -1,7 +1,7 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import CircularProgress from '@mui/material/CircularProgress';
 import CrawlResultsLayout from '../../parts/templates/CrawlResultsLayout';
-import { Alert, Button, Card } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import useApiRequest from '../../hooks/apis/useAuthRequest';
@@ -11,37 +11,37 @@ import useUrlStore from '../../stores/url';
 
 export const Route = createFileRoute('/results/$url')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { url: urlId } = Route.useParams()
-  const { data, loading, error, makeRequest } = useApiRequest<URL>({
+  const { url: urlId } = Route.useParams();
+  const { data, loading, error, } = useApiRequest<URL>({
     endpoint: `/urls/${urlId}`,
-    method: "GET",
+    method: 'GET',
     requiresAuth: true,
   });
 
   const url = useUrlStore((state) => state.url);
   const setUrl = useUrlStore((state) => state.setUrl);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (!data) {
-      return
+      return;
     }
 
-    setUrl(data)
+    setUrl(data);
 
     // if (data.status === 'running' || data.status === 'queued') {
     //   // If the job is still running or queued, we can set an interval to poll for updates
     //   const interval = setInterval(() => {
     //     makeRequest();
-    //   }, 5000); 
+    //   }, 5000);
 
     //   return () => clearInterval(interval);
     // }
-  }, [data])
+  }, [data]);
 
   if (loading) {
     return (
@@ -75,21 +75,10 @@ function RouteComponent() {
           >
             Retry
           </Button>
-
-
-
         </div>
       </div>
     );
   }
 
-  const isCompleted = url.status === 'done';
-
-  return (
-    <CrawlResultsLayout
-      data={url}
-      url={url.url}
-      status={url.status}
-    />
-  );
+  return <CrawlResultsLayout data={url} url={url.url} status={url.status} />;
 }

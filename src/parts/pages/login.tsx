@@ -48,14 +48,12 @@ export const SignInContainer = styled(Stack)(({ theme }) => ({
 const Login = () => {
   return (
     <div className="w-full h-full flex flex-col items-center">
-
-      <SignInContainer direction="row" justifyContent="space-between" >
+      <SignInContainer direction="row" justifyContent="space-between">
         <Card>
           <LoginTemplate />
         </Card>
       </SignInContainer>
-
-    </div >
+    </div>
   );
 };
 

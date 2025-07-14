@@ -1,5 +1,4 @@
 import React from 'react';
-import type { CrawlJob } from '../../types';
 import Skeleton from '@mui/material/Skeleton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,14 +10,18 @@ import Paper from '@mui/material/Paper';
 
 const CrawlJobsTable: React.FC = () => {
   const skeletonTemplate = () => {
-    return <Skeleton />
+    return <Skeleton />;
   };
 
   const jobs = Array.from({ length: 4 }, () => ({}));
 
   return (
     <div className="w-full">
-      <TableContainer component={Paper} sx={{ minWidth: 650 }} aria-label="crawl jobs table">
+      <TableContainer
+        component={Paper}
+        sx={{ minWidth: 650 }}
+        aria-label="crawl jobs table"
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -30,8 +33,11 @@ const CrawlJobsTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobs.map((job, jobIndex) => (
-              <TableRow key={jobIndex} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            {jobs.map((_, jobIndex) => (
+              <TableRow
+                key={jobIndex}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell>{skeletonTemplate()}</TableCell>
                 <TableCell>{skeletonTemplate()}</TableCell>
                 <TableCell>{skeletonTemplate()}</TableCell>
@@ -42,7 +48,6 @@ const CrawlJobsTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
     </div>
   );
 };

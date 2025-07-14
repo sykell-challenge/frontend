@@ -1,15 +1,13 @@
-
-
 @theme {
-  --color-background: #020D0C;
-  --color-text: #49BF9E;
-  --color-text-dark: #358C84;
-  --color-border: #205B73;
-  --color-border-light: #307B8C;
+  --color-background: #020d0c;
+  --color-text: #49bf9e;
+  --color-text-dark: #358c84;
+  --color-border: #205b73;
+  --color-border-light: #307b8c;
 }
 
 @layer tailwind-base {
-  @import 'tailwindcss';
+  @import "tailwindcss";
   @tailwind base;
 }
 
@@ -24,7 +22,7 @@
 
 body {
   margin: 0;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   width: 100vw;
   height: 100vh;
 }
