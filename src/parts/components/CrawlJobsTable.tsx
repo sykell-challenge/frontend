@@ -26,8 +26,6 @@ interface CrawlJobsTableProps {
 
 const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
   jobs,
-  onViewDetails,
-  onCancel,
 }) => {
   const columns: GridColDef[] = [
     { field: 'url', headerName: 'URL', flex: 1, align: 'left', renderCell: (params) => <a className="truncate" href={"/results/" + params.row.urlId}>{params.value}</a> },
@@ -54,11 +52,11 @@ const CrawlJobsTable: React.FC<CrawlJobsTableProps> = ({
           <GridActionsCellItem
             icon={<VisibilityOutlinedIcon />}
             label="View Details"
-            onClick={() => onViewDetails(params.row.jobId)} />,
+          />,
           <GridActionsCellItem
             icon={<ClearOutlinedIcon />}
             label="Cancel Job"
-            onClick={() => onCancel(params.row.jobId)} />
+          />
         ]
       }
     }

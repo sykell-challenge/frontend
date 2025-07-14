@@ -1,4 +1,4 @@
-import { URL } from "../urls";
+import { type URL } from "../urls";
 
 export type Request = {
     url: string;

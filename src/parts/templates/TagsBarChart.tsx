@@ -5,7 +5,7 @@ const TagsBarChart = ({ tags }: TagsBarChartProps) => {
 
     return (
         <BarChart
-            xAxis={[{ data: tags.map(tag => tag.name) }]}
+            xAxis={[{ data: tags.map(tag => tag.tagName) }]}
             series={[{ data: tags.map(tag => tag.count) }]}
         />
     )

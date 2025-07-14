@@ -1,5 +1,5 @@
-import { Link } from "./links";
-import { Tag } from "./tags";
+import { type Link } from "./links";
+import { type Tag } from "./tags";
 
 export type URL = {
     ID: string;

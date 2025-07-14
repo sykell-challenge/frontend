@@ -1,34 +1,13 @@
-interface CrawlData {
-  html_version: string
-  links: Link[]
-  links_count: number
-  login_form: boolean
-  status_code: number
-  tags: Tag[]
-  tags_count: number
-  title: string
-  url_status: string
-}
+import type { URL } from "../urls";
 
-interface Link {
-  link: string
-  type: string
-  status_code: number
-}
-
-interface Tag {
-  tagName: string
-  count: number
-}
-
-export type CrawlResponse = CrawlData;
+export type CrawlResponse = URL;
 
 // New types for job-based API
 export type CrawlJobResponse = {
   jobId: string;
   message: string;
   url: string;
-  urlId: string; 
+  urlId: string;
   status: CrawlStatus;
   startTime: string;
 };
@@ -40,22 +19,22 @@ export type SocketMessage = {
   url: string;
   urlId: string;
   status: string;
-  startedAt?: string ;
-  completedAt?: string ;
+  startedAt?: string;
+  completedAt?: string;
   progress?: number;
   title?: string;
-  statusCode?: number;
+  statusCode?: string;
   htmlVersion?: string;
   loginForm?: boolean;
   linksCount?: number;
   tagsCount?: number;
   tags?: Array<{
-    name: string;
+    tagName: string;
     count: number;
   }>;
   links?: Array<{
     link: string;
     type: string;
-    statusCode: number;
+    statusCode: string;
   }>;
 };

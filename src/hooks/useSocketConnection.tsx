@@ -3,6 +3,7 @@ import { Socket } from 'socket.io-client';
 import { createSocketConnection, getAuthToken } from '../utils/socketUtils';
 import useCrawlStore from '../stores/crawl';
 import type { SocketMessage } from '../types/apis/crawl';
+import useUrlStore from '../stores/job';
 
 interface UseSocketResult {
     socket: Socket | null;
@@ -15,6 +16,8 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
     const socketRef = useRef<Socket | null>(null);
     const urlRef = useRef<string | null>(null);
     const { updateJob } = useCrawlStore();
+    const urlStoreUrl = useUrlStore((state) => state.url);
+    const setUrl = useUrlStore((state) => state.setUrl);
 
     useEffect(() => {
         // Only create a new socket if we don't have one or URL changed
@@ -53,6 +56,19 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
                 status: 'started', // Keep as started but with partial data
                 progress: 75,
             });
+            setUrl({
+                ...urlStoreUrl,
+                links: event.links || [],
+                ID: event.urlId,
+                url: event.url,
+                title: event.title || '',
+                status: 'done',
+                tags: event.tags || [],
+                statusCode: event.statusCode || "200",
+                htmlVersion: event.htmlVersion || '',
+                jobId: event.jobId,
+                loginFormPresent: event.loginForm || false,
+            })
         };
 
         const handleCrawlCompleted = (event: SocketMessage) => {
@@ -62,6 +78,19 @@ export const useSocketConnection = (url: string = "localhost:8080"): UseSocketRe
                 status: 'completed',
                 progress: 100
             });
+            setUrl({
+                ...urlStoreUrl,
+                links: event.links || [],
+                ID: event.urlId,
+                url: event.url,
+                title: event.title || '',
+                status: 'done',
+                tags: event.tags || [],
+                statusCode: event.statusCode || "200",
+                htmlVersion: event.htmlVersion || '',
+                jobId: event.jobId,
+                loginFormPresent: event.loginForm || false,
+            })
         };
 
         const handleCrawlError = (event: SocketMessage) => {

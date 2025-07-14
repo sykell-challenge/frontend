@@ -49,20 +49,16 @@ const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
         <WebsiteInformation
           className="w-full md:max-h-32"
           title={data.title}
-          loginPageAvailable={data.login_form}
+          loginPageAvailable={data.loginFormPresent}
           url={url}
-          htmlVersion={data.html_version}
+          htmlVersion={data.htmlVersion}
         />
 
         <div className="flex flex-col w-full gap-4 md:flex-row lg:w-1/3 lg:flex-col">
           <div className="w-full h-44 md:h-56 lg:h-60">
             {data.tags &&
               <TagsBarChart
-                tags={data?.tags?.map(tag => ({
-                  name: tag.tagName,
-                  count: tag.count,
-                  color: colors[data.tags.indexOf(tag) % colors.length]
-                })) || []}
+                tags={data?.tags || []}
               />
             }
           </div>
@@ -84,7 +80,7 @@ const CrawlResultsLayout: React.FC<CrawlResultsLayoutProps> = ({
               links={data.links.map((link) => ({
                 link: link.link,
                 type: link.type,
-                status: link.status_code.toString()
+                statusCode: link.statusCode.toString()
               })) || []}
             />
           }

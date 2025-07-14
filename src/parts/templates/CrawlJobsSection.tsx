@@ -2,18 +2,19 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CrawlJobsTable from '../components/CrawlJobsTable';
 import CrawlJobsTableSkeleton from '../components/CrawlJobsTableSkeleton';
-import { useUrlInputHandlers } from '../../hooks/useUrlInputHandlers';
-import { useCrawlHistory } from '../../hooks/apis/useCrawlHistory';
 import Button from '@mui/material/Button';
 import { Alert, Typography } from '@mui/material';
 import CrawlForm from '../components/CrawlForm';
+import useApiRequest from '../../hooks/apis/useAuthRequest';
+import type { CrawlJob } from '../../types';
 
 const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className }) => {
-  const { handleViewDetails, handleCancel, isLoading } = useUrlInputHandlers();
-  const { data: jobs,
-    loading,
-    error,
-    refetch } = useCrawlHistory()
+  const { data: jobs, loading, error, refetch } = useApiRequest<Array<CrawlJob>>({
+    endpoint: "/crawl-history",
+    method: "GET",
+    requiresAuth: true,
+    manual: false,
+  });
 
   if (loading) {
     return <Card className={`w-full ${className}`}>
@@ -54,8 +55,6 @@ const CrawlJobsSection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ clas
       <CrawlJobsTable
         key={jobs?.length}
         jobs={jobs || []}
-        onViewDetails={handleViewDetails}
-        onCancel={handleCancel}
       />
 
     </div>
