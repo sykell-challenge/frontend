@@ -24,5 +24,18 @@ Run all E2E tests:
 npx playwright test
 ```
 
+## Next steps
 
+- Settings page for the user
+- Bulk actions
+- Animated UI
+- Theme switcher
+- Admin mode
+- Auto refresh JWT tokens
+- Husky hooks for automatic linting before commits
+- Use Open API specs to automate the API calls
+- Improve the UI
+- Integrate Storybook
+- Write unit and integration tests
+- Write more E2E tests
 
